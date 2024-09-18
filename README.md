@@ -89,7 +89,7 @@ In Salesforce, a custom field named `Text` was added to the Knowledge object to 
 
 The custom `Text` field was added to the Knowledge object page layout, as shown below.
 
-![Alt text](images/salesforce_knowledg_layout.png)
+![Alt salesforce_knowledg_layout](images/salesforce_knowledg_layout.png)
 
 ## Running the Script
 

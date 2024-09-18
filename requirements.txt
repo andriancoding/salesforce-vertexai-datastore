@@ -1,0 +1,6 @@
+functions-framework==3.8.1
+google-cloud-discoveryengine
+google-api-core
+google-cloud-core
+requests
+protobuf

@@ -2,6 +2,8 @@
 
 This project demonstrates how to integrate Salesforce Knowledge articles with Vertex AI Datastore, enhancing search capabilities for Salesforce Knowledge Articles. The integration is managed through a Google Cloud Function, scheduled to run daily using Cloud Scheduler.
 
+<img src="images/architecture_diagram.png" width="800" height="600">
+
 ## Project Overview
 
 - **Google Cloud Function**: Fetches Salesforce Knowledge articles and uploads them to Vertex AI Datastore.

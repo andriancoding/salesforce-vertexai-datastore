@@ -15,62 +15,68 @@ This project demonstrates how to integrate Salesforce Knowledge articles with Ve
 ### Google Cloud Setup
 
 1. **Cloud Function**: Set up a Cloud Function with appropriate IAM roles for accessing Vertex AI Datastore.
+
+   Refer to the screenshots for Cloud Function setup. Key configuration options include:
+
+   - **Runtime**: Python 3.11
+   - **Trigger**: HTTP trigger
+   - **IAM Role**: Ensure the function has the required roles for accessing Vertex AI Datastore.
+
+   ![Alt text](images/service_accounts.png)
+
+   ![Alt text](images/cloud_function_settings_1.png)
+
+   ![Alt text](images/cloud_function_settings_2.png)
+
+
 2. **Cloud Scheduler**: Configure Cloud Scheduler to trigger the Cloud Function daily.
+
+   Cloud Scheduler is configured to run the function daily. See below for the Cloud Scheduler setup. Key configurations include:
+
+   - **Frequency**: Set to run daily.
+   - **Target**: The Cloud Function URL.
+
+   ![Alt text](images/cloud_scheduler.png)
 
 ### Salesforce Setup
 
 1. **Custom Field**: Create a custom field (`Text`) in the Knowledge object.
+
+   In Salesforce, a custom field named `Text` was added to the Knowledge object to store article content. See below for field details.
+
+   <img src="images/salesforce_text_field.png" width="800" height="600">
+
 2. **Page Layout**: Update the page layout to include the `Text` field.
+
+   The custom `Text` field was added to the Knowledge object page layout, as shown below.
+
+   <img src="images/salesforce_knowledg_layout.png" width="1200" height="600">
+
 3. **API Credentials**: Follow the instructions below to generate the necessary Salesforce API credentials.
 
-## Generating Salesforce API Credentials
+   **Update Salesforce Environment URLs**:
+      - In the `config.py` file, update the following attributes to match your Salesforce environment URL:
+      ```python
+      self.sf_domain = "https://yourdomain-dev-ed.develop.my.salesforce.com"
+      self.sf_article_base_url = "https://yourdomain-dev-ed.develop.lightning.force.com/lightning/r/Knowledge__kav/"
+      ```
 
-1. **Update Salesforce Environment URLs**:
-   - In the `config.py` file, update the following attributes to match your Salesforce environment URL:
-     ```python
-     self.sf_domain = "https://yourdomain-dev-ed.develop.my.salesforce.com"
-     self.sf_article_base_url = "https://yourdomain-dev-ed.develop.lightning.force.com/lightning/r/Knowledge__kav/"
-     ```
+   **Create a Dedicated Salesforce Account**:
+      - Create a dedicated Salesforce account for the API integration. Ensure the user has access to the Knowledge object. For guidance, refer to the [Salesforce Admin Guide](https://help.salesforce.com/s/articleView?id=sf.fsc_admin_create_advisor_assign_perm.htm&type=5).
 
-2. **Create a Dedicated Salesforce Account**:
-   - Create a dedicated Salesforce account for the API integration. Ensure the user has access to the Knowledge object. For guidance, refer to the [Salesforce Admin Guide](https://help.salesforce.com/s/articleView?id=sf.fsc_admin_create_advisor_assign_perm.htm&type=5).
+   **Create a Connected App**:
+      - Follow the instructions to create a Connected App and generate the credentials needed for API integrations with Salesforce. For details, see the [Salesforce Connected App Guide](https://help.salesforce.com/s/articleView?id=sf.connected_app_create.htm&type=5).
 
-3. **Create a Connected App**:
-   - Follow the instructions to create a Connected App and generate the credentials needed for API integrations with Salesforce. For details, see the [Salesforce Connected App Guide](https://help.salesforce.com/s/articleView?id=sf.connected_app_create.htm&type=5).
+   **Generate a Security Token**:
+      - Obtain a security token by following the steps outlined in the [Salesforce Security Token Guide](https://help.salesforce.com/s/articleView?id=xcloud.user_security_token.htm&type=5).
 
-4. **Generate a Security Token**:
-   - Obtain a security token by following the steps outlined in the [Salesforce Security Token Guide](https://help.salesforce.com/s/articleView?id=xcloud.user_security_token.htm&type=5).
-
-5. **Credentials Required**:
-   - After completing the above steps, you should have the following credentials:
-     - `client_id`
-     - `client_secret`
-     - `username`
-     - `password`
-     - `security_token`
-
-## Google Cloud Function Settings
-
-Refer to the screenshots for Cloud Function setup. Key configuration options include:
-
-- **Runtime**: Python 3.11
-- **Trigger**: HTTP trigger
-- **IAM Role**: Ensure the function has the required roles for accessing Vertex AI Datastore.
-
-![Alt text](images/service_accounts.png)
-
-![Alt text](images/cloud_function_settings_1.png)
-
-![Alt text](images/cloud_function_settings_2.png)
-
-## Cloud Scheduler Settings
-
-Cloud Scheduler is configured to run the function daily. See below for the Cloud Scheduler setup. Key configurations include:
-
-- **Frequency**: Set to run daily.
-- **Target**: The Cloud Function URL.
-
-![Alt text](images/cloud_scheduler.png)
+   **Credentials Required**:
+      - After completing the above steps, you should have the following credentials:
+      - `client_id`
+      - `client_secret`
+      - `username`
+      - `password`
+      - `security_token`
 
 ## Cloud Function Source Code
 
@@ -79,19 +85,9 @@ The source code for the Cloud Function is located in the `main.py` file. It incl
 - Fetch Knowledge articles from Salesforce.
 - Upload the article content to Vertex AI Datastore.
 
-## Salesforce Setup
+`config.py` refers to environment variables that are defined in the runtime of the Cloud Function.
 
-### Custom Field: "Text"
-
-In Salesforce, a custom field named `Text` was added to the Knowledge object to store article content. See below for field details.
-
-![Alt text](images/salesforce_text_field.png)
-
-### Page Layout
-
-The custom `Text` field was added to the Knowledge object page layout, as shown below.
-
-![Alt salesforce_knowledg_layout](images/salesforce_knowledg_layout.png)
+As part of the Cloud Function setup, copy and paste the code in the `main.py` and `requirements.txt` files. Also, make sure to create `config.py` file in the Cloud Function and paste the code in the repo.
 
 ## Running the Script
 
